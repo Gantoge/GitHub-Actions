@@ -27,13 +27,11 @@ jobs:
       - name: Compile Java code
         run: |
           mkdir -p out
-          # Указываем путь к стандартным библиотекам, используя $JAVA_HOME/lib для JDK
-          javac -cp "D:\Java\lib*:src/main/java" -d out $(find src/main/java -name "*.java")
+          javac -cp "D:\Java\lib/*:src/main/java" -d out $(find src/main/java -name "*.java")
 
       - name: Run unit tests
         run: |
-          # Указываем путь к стандартным библиотекам, используя $JAVA_HOME/lib для JDK и путь к тестам
-          java -cp "D:\Java\lib*:out:src/test/java" org.junit.platform.console.ConsoleLauncher --select-class test.java.com.example.AppTest
+          java -cp "D:\Java\lib/*:out:src/test/java" org.junit.platform.console.ConsoleLauncher --select-class test.java.com.example.AppTest
 
   test:
     runs-on: ubuntu-latest
@@ -50,8 +48,7 @@ jobs:
 
       - name: Run tests
         run: |
-          # Указываем путь к стандартным библиотекам, используя $JAVA_HOME/lib для JDK
-          java -cp "$JAVA_HOME/lib/*:out:src/test/java" org.junit.platform.console.ConsoleLauncher --select-class test.java.com.example.AppTest
+          java -cp "D:\Java\lib/*:out:src/test/java" org.junit.platform.console.ConsoleLauncher --select-class test.java.com.example.AppTest
 
   deploy:
     runs-on: ubuntu-latest
