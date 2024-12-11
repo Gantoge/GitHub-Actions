@@ -24,6 +24,16 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
 
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Ensure Gradle Wrapper
+        run: |
+          if [ ! -f ./gradlew ]; then
+            echo "Gradle Wrapper not found, generating..."
+            ./gradle wrapper
+          fi
+
       - name: Build with Gradle
         run: ./gradlew build
 
@@ -58,4 +68,4 @@ jobs:
 
       - name: Deploy to Remote Server
         run: |
-          ssh Someone "cd /path/to/app && git pull && ./deploy.sh"
+          ssh user@Someone "cd /path/to/app && git pull && ./deploy.sh"
