@@ -34,7 +34,9 @@ jobs:
       - name: Install Maven on macOS (skip if already installed)
         if: runner.os == 'macOS'
         run: |
+          echo "Checking if Maven is installed..."
           if ! command -v mvn &> /dev/null; then
+            echo "Maven not found. Installing Maven..."
             brew install maven
           else
             echo "Maven is already installed."
