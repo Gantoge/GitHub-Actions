@@ -1,6 +1,16 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   build:
-    runs-on: ubuntu-22.04  # только для Ubuntu
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         java-version: [11, 17]
