@@ -31,9 +31,14 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install maven
 
-      - name: Install Maven on macOS
+      - name: Install Maven on macOS (skip if already installed)
         if: runner.os == 'macOS'
-        run: brew install maven
+        run: |
+          if ! command -v mvn &> /dev/null; then
+            brew install maven
+          else
+            echo "Maven is already installed."
+          fi
 
       - name: Build with Maven
         run: mvn clean install
