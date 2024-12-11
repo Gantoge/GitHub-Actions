@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -37,6 +38,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
+          distribution: 'temurin'
 
       - name: Run tests
         run: ./gradlew test
