@@ -56,4 +56,4 @@ jobs:
 
       - name: Deploy to Remote Server
         run: |
-          ssh user@remote_host "cd /path/to/app && git pull && ./deploy.sh"
+          ssh Someone "cd /path/to/app && git pull && ./deploy.sh"
