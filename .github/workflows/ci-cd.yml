@@ -31,8 +31,8 @@ jobs:
 
       - name: Run unit tests
         run: |
- 
-          java -cp "$JAVA_HOME/lib/*:libs/*:out:src/test/java" --select-class test.java.com.example.AppTest
+          # Указываем путь к JUnit JAR файлам в libs/
+          java -cp "$JAVA_HOME/lib/*:libs/*:out" org.junit.runner.JUnitCore test.java.com.example.AppTest
 
   test:
     runs-on: ubuntu-latest
@@ -49,7 +49,8 @@ jobs:
 
       - name: Run tests
         run: |
-          java -cp "$JAVA_HOME/lib/*:libs/*:out:src/test/java" --select-class test.java.com.example.AppTest
+          # Указываем путь к JUnit JAR файлам в libs/
+          java -cp "$JAVA_HOME/lib/*:libs/*:out" org.junit.runner.JUnitCore test.java.com.example.AppTest
 
   deploy:
     runs-on: ubuntu-latest
