@@ -32,7 +32,7 @@ jobs:
       - name: Run unit tests
         run: |
           # Указываем путь к JUnit JAR файлам, добавленным в libs/
-          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class com.example.AppTest
+          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class src/test/java/com/example/AppTest.java
 
   test:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - name: Run tests
         run: |
           # Указываем путь к JUnit JAR файлам, добавленным в libs/
-          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class com.example.AppTest
+          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class src/test/java/com/example/AppTest.java
 
   deploy:
     runs-on: ubuntu-latest
