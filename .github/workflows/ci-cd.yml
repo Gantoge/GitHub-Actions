@@ -1,19 +1,9 @@
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04  # только для Ubuntu
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         java-version: [11, 17]
-
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -31,49 +21,10 @@ jobs:
 
       - name: Ensure Gradle Wrapper
         run: |
-          echo "Checking for Gradle Wrapper..."
           if [ ! -f ./gradlew ]; then
             echo "Gradle Wrapper not found, generating..."
             gradle wrapper
           fi
 
       - name: Build with Gradle
-        run: |
-          echo "Building with Gradle..."
-          ./gradlew build || { echo 'Build failed!'; exit 1; }
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: 'temurin'
-
-      - name: Run tests
-        run: |
-          echo "Running tests..."
-          ./gradlew test || { echo 'Tests failed!'; exit 1; }
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up SSH for deployment
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy to Remote Server
-        run: |
-          echo "Deploying..."
-          ssh user@Someone "cd /path/to/app && git pull && ./deploy.sh"
+        run: ./gradlew build
