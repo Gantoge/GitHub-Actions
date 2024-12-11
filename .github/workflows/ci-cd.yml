@@ -29,10 +29,14 @@ jobs:
           mkdir -p out
           javac -cp "$JAVA_HOME/lib/*:libs/*:src/main/java" -d out $(find src/main/java -name "*.java")
 
+      - name: Compile test code
+        run: |
+          javac -cp "$JAVA_HOME/lib/*:libs/*:out" -d out $(find src/test/java -name "*.java")
+
       - name: Run unit tests
         run: |
-          # Указываем путь к JUnit JAR файлам, добавленным в libs/
-          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class src/test/java/com/example/AppTest.java
+          # Указываем путь к JUnit JAR файлам и тестовым классам
+          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class com.example.AppTest
 
   test:
     runs-on: ubuntu-latest
@@ -49,8 +53,8 @@ jobs:
 
       - name: Run tests
         run: |
-          # Указываем путь к JUnit JAR файлам, добавленным в libs/
-          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class src/test/java/com/example/AppTest.java
+          # Указываем путь к JUnit JAR файлам и тестовым классам
+          java -cp "libs/*:out:libs/junit-platform-console-standalone-1.9.2.jar" org.junit.platform.console.ConsoleLauncher --select-class com.example.AppTest
 
   deploy:
     runs-on: ubuntu-latest
