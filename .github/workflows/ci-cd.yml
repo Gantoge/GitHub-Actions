@@ -27,7 +27,7 @@ jobs:
       - name: Install Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: '7.5' 
+          gradle-version: '7.5'
 
       - name: Ensure Gradle Wrapper
         run: |
@@ -37,7 +37,9 @@ jobs:
           fi
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: |
+          echo "Building with Gradle..."
+          ./gradlew build || { echo 'Build failed'; exit 1; }
 
   test:
     runs-on: ubuntu-latest
@@ -53,7 +55,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Run tests
-        run: ./gradlew test
+        run: |
+          echo "Running tests..."
+          ./gradlew test || { echo 'Tests failed'; exit 1; }
 
   deploy:
     runs-on: ubuntu-latest
@@ -70,4 +74,5 @@ jobs:
 
       - name: Deploy to Remote Server
         run: |
+          echo "Deploying..."
           ssh user@Someone "cd /path/to/app && git pull && ./deploy.sh"
