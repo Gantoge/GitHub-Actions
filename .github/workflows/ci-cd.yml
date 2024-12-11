@@ -31,6 +31,7 @@ jobs:
 
       - name: Ensure Gradle Wrapper
         run: |
+          echo "Checking for Gradle Wrapper..."
           if [ ! -f ./gradlew ]; then
             echo "Gradle Wrapper not found, generating..."
             gradle wrapper
@@ -39,7 +40,7 @@ jobs:
       - name: Build with Gradle
         run: |
           echo "Building with Gradle..."
-          ./gradlew build || { echo 'Build failed'; exit 1; }
+          ./gradlew build || { echo 'Build failed!'; exit 1; }
 
   test:
     runs-on: ubuntu-latest
@@ -57,7 +58,7 @@ jobs:
       - name: Run tests
         run: |
           echo "Running tests..."
-          ./gradlew test || { echo 'Tests failed'; exit 1; }
+          ./gradlew test || { echo 'Tests failed!'; exit 1; }
 
   deploy:
     runs-on: ubuntu-latest
