@@ -30,7 +30,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          if [ $RUNNER_OS = 'Windows' ]; then
+          if [[ $RUNNER_OS == 'Windows' ]]; then
             gradlew.bat build
           else
             ./gradlew build
@@ -55,7 +55,7 @@ jobs:
 
       - name: Run tests
         run: |
-          if [ $RUNNER_OS = 'Windows' ]; then
+          if [[ $RUNNER_OS == 'Windows' ]]; then
             gradlew.bat test
           else
             ./gradlew test
