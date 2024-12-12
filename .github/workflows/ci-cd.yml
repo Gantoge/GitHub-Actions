@@ -24,11 +24,9 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
 
-      - name: Give execute permission to gradlew
-        run: |
-          if [ $RUNNER_OS != 'Windows' ]; then
-            chmod +x ./gradlew
-          fi
+      - name: Give execute permission to gradlew (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: |
@@ -51,9 +49,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
-      - name: Give execute permission to gradlew
-        run: |
-          chmod +x ./gradlew
+      - name: Give execute permission to gradlew (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: chmod +x ./gradlew
 
       - name: Run tests
         run: |
