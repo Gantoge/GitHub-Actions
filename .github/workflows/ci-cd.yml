@@ -24,17 +24,15 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
 
-      - name: Give execute permission to gradlew (Linux/macOS)
-        if: runner.os != 'Windows'
-        run: chmod +x ./gradlew
+      - name: Build on Windows
+        if: runner.os == 'Windows'
+        run: .\gradlew.bat build
 
-      - name: Build with Gradle
+      - name: Build on Unix-based OS
+        if: runner.os != 'Windows'
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            ./gradlew.bat build
-          else
-            ./gradlew build
-          fi
+          chmod +x ./gradlew
+          ./gradlew build
 
   test:
     runs-on: ubuntu-latest
@@ -49,17 +47,15 @@ jobs:
           java-version: 17
           distribution: 'temurin'
 
-      - name: Give execute permission to gradlew (Linux/macOS)
-        if: runner.os != 'Windows'
-        run: chmod +x ./gradlew
+      - name: Run tests on Windows
+        if: runner.os == 'Windows'
+        run: .\gradlew.bat test
 
-      - name: Run tests
+      - name: Run tests on Unix-based OS
+        if: runner.os != 'Windows'
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            ./gradlew.bat test
-          else
-            ./gradlew test
-          fi
+          chmod +x ./gradlew
+          ./gradlew test
 
   deploy:
     runs-on: ubuntu-latest
@@ -76,4 +72,4 @@ jobs:
 
       - name: Deploy to Remote Server
         run: |
-          ssh user@Someone "cd /path/to/app && git pull && ./deploy.sh"
+          ssh user@server "cd /path/to/app && git pull && ./deploy.sh"
